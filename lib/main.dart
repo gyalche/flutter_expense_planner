@@ -53,9 +53,20 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Expense tracker'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children:<Widget>[
-          Card(child:Text("CHART")),
-          Card(child:Text("LIST OF TRANSACTIONS"),)
+           Container(
+             width:double.infinity,
+             child: const Card(
+               color:Colors.blue,
+                child: Text("CHART!"),
+              elevation:5,
+          ),
+           ),
+           Card(
+             color:Colors.red,
+             child:Text("LIST OF TRANSACTIONS"),)
         ]
       )
       // This trailing comma makes auto-formatting nicer for build methods.

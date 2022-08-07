@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-
+import './transaction.dart';
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
+
+
 
   // This widget is the root of your application.
   @override
@@ -16,13 +18,16 @@ class MyApp extends StatelessWidget {
         
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home:  MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+   MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  
+  
 
   final String title;
 
@@ -32,6 +37,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  
+  
+final List<Transaction> transactions=[
+    Transaction(id:'1', title:'Dawa shop', amount:12.1, date:DateTime.now()),
+    Transaction(id:'2', title:"Weekly shop", amount:22.21, date:DateTime.now()),
+  ];
+  
 
   void _incrementCounter() {
     setState(() {
@@ -44,6 +56,9 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+ 
+
+ 
   @override
   Widget build(BuildContext context) {
   
@@ -53,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('Expense tracker'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children:<Widget>[
            Container(
@@ -64,9 +79,45 @@ class _MyHomePageState extends State<MyHomePage> {
               elevation:5,
           ),
            ),
-           Card(
-             color:Colors.red,
-             child:Text("LIST OF TRANSACTIONS"),)
+           Column(
+             
+             children:transactions.map((tx){
+               return Card(
+                //  elevation:3,
+                 child:Row(
+                   children: [
+                     Container(
+                       padding:EdgeInsets.all(10),
+                       
+                       margin: EdgeInsets.symmetric(vertical:10, horizontal:15),
+                       decoration:BoxDecoration(border: Border.all(color:Colors.purple, width:2)),
+                       child:Text(
+                          '\$' +tx.amount.toString(),
+                          style:TextStyle(
+                          fontWeight:FontWeight.bold,
+                          fontSize:20,
+                          color:Colors.purple,
+                          )
+                       )
+                     ),
+                     Column(
+                       crossAxisAlignment:CrossAxisAlignment.start,
+                       children:<Widget>[
+                         Text(tx.title, style:TextStyle(
+                           fontWeight:FontWeight.bold,
+                           fontSize:16,
+                           )),
+                         Text(tx.date.toString(), style:TextStyle(
+                           color:Colors.grey,
+                           fontSize:13
+                         ))
+                       ]
+                     )
+                   ],
+                 ),
+               );
+             }).toList(),
+           )
         ]
       )
       // This trailing comma makes auto-formatting nicer for build methods.

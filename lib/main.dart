@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './transaction.dart';
+import 'package:intl/intl.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -107,7 +109,7 @@ final List<Transaction> transactions=[
                            fontWeight:FontWeight.bold,
                            fontSize:16,
                            )),
-                         Text(tx.date.toString(), style:TextStyle(
+                         Text(DateFormat().format(tx.date), style:TextStyle(
                            color:Colors.grey,
                            fontSize:13
                          ))

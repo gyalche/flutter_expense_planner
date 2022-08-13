@@ -16,9 +16,8 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return 
             Container(
-              height:300,
-              child: SingleChildScrollView(
-                child: Column(
+              height:440,
+                child: ListView(
                      children:transactions.map((tx){
                        return Card(
                         //  elevation:3,
@@ -30,7 +29,7 @@ class TransactionList extends StatelessWidget {
                                margin: EdgeInsets.symmetric(vertical:10, horizontal:15),
                                decoration:BoxDecoration(border: Border.all(color:Colors.purple, width:2)),
                                child:Text(
-                                  '\$' +tx.amount.toString(),
+                                  '\$' +tx.amount.toStringAsFixed(2),
                                   style:TextStyle(
                                   fontWeight:FontWeight.bold,
                                   fontSize:20,
@@ -56,7 +55,7 @@ class TransactionList extends StatelessWidget {
                        );
                      }).toList(),
                    ),
-              ),
+              
             );
   }
 }

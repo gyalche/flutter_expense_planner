@@ -9,7 +9,20 @@ class NewTransaction extends StatelessWidget {
   final titleController= TextEditingController();
   final amountController=TextEditingController();
 
+ 
   final Function addTx;
+
+   void submitData() {
+    final enteredTitle=titleController.text;
+    final enteredAmount=double.parse(amountController.text);
+
+    if(enteredTitle.isEmpty || enteredAmount<=0) {
+      return;
+    }
+    addTx(
+      enteredTitle, enteredAmount
+    );
+  }
   NewTransaction(this.addTx);
   @override
   Widget build(BuildContext context) {
@@ -21,29 +34,22 @@ class NewTransaction extends StatelessWidget {
                    crossAxisAlignment: CrossAxisAlignment.end,
                    children: [
                      TextField(
-                      decoration:InputDecoration(
-                        labelText:'Title'),
+                      decoration:InputDecoration(labelText:'Title'),
                         controller:titleController,
-                        // onChanged:(val){
-                        //   titleInput=val;
-                        // }
+                        onSubmitted:(_)=>submitData(),
                       ),
                      
                      TextField(
                        decoration:InputDecoration(
-                         labelText:"Amount",
-                         
-                       ),
+                         labelText:"Amount",),
                        controller:amountController,
-                      //  onChanged:(val){
-                      //    amountInput=val;
-                      //  }
+                       keyboardType:TextInputType.number,
+                       onSubmitted:(_) =>submitData(),
+                      
                      ),
       
                      TextButton(
-                       onPressed: (() => {
-                         addTx(titleController.text,double.parse(amountController.text) )
-                       }),
+                       onPressed: submitData,
                         child: Text("Add Transaction", style:TextStyle(
                           color:Colors.purple
                         )),

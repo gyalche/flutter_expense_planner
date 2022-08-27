@@ -17,7 +17,13 @@ class TransactionList extends StatelessWidget {
     return 
             Container(
               height:440,
-                child: ListView(
+                child: transactions.isEmpty? Column(
+                  children: [
+                    Text('No transaction added yet'),
+                    SizedBox(height:10),
+                    Image.asset("assets/images/myprofile.png", fit:BoxFit.cover)
+                  ]
+                ): ListView(
                      children:transactions.map((tx){
                        return Card(
                         //  elevation:3,
@@ -33,7 +39,7 @@ class TransactionList extends StatelessWidget {
                                   style:TextStyle(
                                   fontWeight:FontWeight.bold,
                                   fontSize:20,
-                                  color:Colors.purple,
+                                  color:Colors.red,
                                   )
                                )
                              ),

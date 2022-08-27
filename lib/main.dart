@@ -1,3 +1,4 @@
+import 'package:expense_track/widgets/chart.dart';
 import 'package:expense_track/widgets/new_transaction.dart';
 import 'package:expense_track/widgets/transactionList.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Expense tracker',
+      title: 'Expense Tracker',
       theme: ThemeData(
+        primarySwatch: Colors.purple,
         
-        primarySwatch: Colors.blue,
+        // fontFamily:'Quicksand'
       ),
       home:  MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -41,11 +43,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
  
  final List<Transaction> _userTransaction=[
-    Transaction(id:'1', title:'Dawa shop', amount:12.12, date:DateTime.now()),
-    Transaction(id:'2', title:"Weekly shop", amount:22.21, date:DateTime.now()),
-    Transaction(id:'3', title:"monthly shop", amount:52.21, date:DateTime.now()),
+    // Transaction(id:'1', title:'Dawa shop', amount:12.12, date:DateTime.now()),
+    // Transaction(id:'2', title:"Weekly shop", amount:22.21, date:DateTime.now()),
+    // Transaction(id:'3', title:"monthly shop", amount:52.21, date:DateTime.now()),
 
   ];
+   List<Transaction>get _recentTransaction{
+    // var _userTransactions;
+    return _userTransaction.where((tx){
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days:7)));
+    }).toList();
+  }
 
   void _addNewTransaction(String title, double amount){
     final newTx=Transaction(
@@ -69,15 +77,16 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
   
     return MaterialApp(
+      
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          
+          backgroundColor:Colors.purple,
           title: Text('Expense tracker'),
           actions: [
             IconButton(icon:Icon(Icons.add),
               onPressed:() => _startAddNewTransaction(context)
-            )
+            ),
           ],
         ),
         body: SingleChildScrollView(
@@ -85,21 +94,17 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children:<Widget>[
-                 Container(
-                   width:double.infinity,
-                   child: const Card(
-                     color:Colors.blue,
-                      child: Text("CHART!"),
-                    elevation:5,
-                  ),
-                 ),
+                 Chart(_recentTransaction),
                 TransactionList(_userTransaction)
+               
+
               ]
             ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
 
         floatingActionButton: FloatingActionButton(
+        backgroundColor:Colors.purple,
           child:Icon(Icons.add),
           onPressed: () => _startAddNewTransaction(context)
         ),

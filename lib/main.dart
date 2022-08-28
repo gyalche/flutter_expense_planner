@@ -66,7 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
         _userTransaction.add(newTx);
       });
   }
-
   void _startAddNewTransaction(BuildContext ctx){
     showModalBottomSheet(context: ctx, builder: (_){
       return NewTransaction(_addNewTransaction);
